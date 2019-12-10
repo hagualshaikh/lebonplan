@@ -24,6 +24,11 @@ app.get('/products', function(req, res) {
     res.render('products');
 });
 
+app.get('/signup', function(req, res) {
+    console.log('GET /signup')
+    res.render('signup');
+});
+
 
 
 app.listen(port, function() {
