@@ -18,7 +18,10 @@ app.get('/', function(req, res){
     console.log('GET /')
     res.render('home');
 });
-
+app.get('/signup',function(){
+    console.log('GET/signup')
+    res.render('signup')
+})
 app.listen(port, function () {
     console.log("Server started on port:", port);
 });
