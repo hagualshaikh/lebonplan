@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>ajoutez</h1>
+            <form enctype='multipart/form-data' action='/product' method='post'>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">ajoutez un produit</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="adjout produit ...">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">name de produit</label>
+                    <input type="text" name="produitName" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter produitName ... ">
+                </div>
+                 <div class="form-group">
+                    <label for="exampleInputEmail1">prix de produit</label>
+                    <input type="text" name="produitPix" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter Prix">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">de quelle ville</label>
+                    <input type="email" name="ville" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Enter ville">
+                </div>
+                <label for="exampleFormControlTextarea1">discription de produit</label>
+  <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+</div>
+
+                
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <div><input type="file" name='image'/></div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

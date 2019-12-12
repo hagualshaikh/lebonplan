@@ -1,1 +1,17 @@
-<h1>home</h1>
+<h3>By name</h3>
+ <h1>Home</h1>
+    <h2 >
+
+        {{#each user}}
+        <div class="col-md-4 col-12 text-center">
+            <h2><a href="/profile/{{id}}">{{name}}</a></h2>
+        </div>
+        {{/each}}
+        
+       
+<h3>By ID</h3>
+<ul>
+    {{#each user}}
+    <li><a href="/profile/{{ _id }}">{{ username }}</a></li>
+    {{/each}}
+</ul>
