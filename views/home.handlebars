@@ -1,10 +1,10 @@
-<h3>By name</h3>
+{{!-- <h3>By name</h3>
  <h1>Home</h1>
-    <h2 >
+    <h2>
 
-        {{#each user}}
+        {{#each products}}
         <div class="col-md-4 col-12 text-center">
-            <h2><a href="/profile/{{id}}">{{name}}</a></h2>
+            <h2><a href="/profile">{{name}}</a></h2>
         </div>
         {{/each}}
         
@@ -14,4 +14,28 @@
     {{#each user}}
     <li><a href="/profile/{{ _id }}">{{ username }}</a></li>
     {{/each}}
-</ul>
+</ul> 
+
+
+{{#each products}}
+        <div class="col-md-4 col-12 text-center">
+            <h2><a href="/products">{{ville}}</a></h2>
+        </div>
+        {{/each}}
+         --}}
+<div class=“cities”>
+    <div class='city'>
+        <a href='/products/paris'><img src='../img/paris.jpg' alt='Picture of Paris'></a>
+        <a href='/products/paris'><h3>Paris</h3></a>
+    </div>
+    <div class='city'>
+        <a href='/products/lyon'><img src='../img/Lyon.jpg' alt='Picture of Lyon'></a>
+        <a href='/products/lyon'><h3>Lyon</h3></a>
+    </div>
+    <div class='city'>
+        <a href='/products/marseille'><img src='../img/marseille.jpg' alt='Picture of Marseille'></a>
+        <a href='/products/marseille'><h3>Marseille</h3></a>
+    </div>
+</div>
+
+       

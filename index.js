@@ -9,23 +9,10 @@ var LocalStrategy = require("passport-local");
 var multer = require('multer');
 var fs = require('fs');
 var User = require("./models").User; // same as: var User = require('./models/user');
-
+var products = require("./models").products; // same as: var User = require('./models/user');
 var upload = multer({
     dest: 'public/uploads'
 });
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null,'./public/uploads')
-//     },
-//     filename: function (req, file, cb) {
-//       console.log("file",file);  
-//     //   fileExtension = file.originalname.split('.')[1]
-//       cb(null, file.originalname)
-//     }
-//   });
-// var upload = multer({storage:storage ,limits:{fileSize:1024 *1025*5},fileFilter:fileFilter});
-
-
 
 var port = process.env.PORT || 3000;
 mongoose.connect(
@@ -64,7 +51,6 @@ app.use(
         store: new MongoStore({ mongooseConnection: mongoose.connection })
     })
 );
-
 // enable Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -79,7 +65,6 @@ app.get('/', function(req, res) {
     console.log('GET /')
     res.render('home');
 });
-
 app.get('/profile', function (req, res) {
     if (req.isAuthenticated()) {
         console.log('req.user', req.user);
@@ -94,21 +79,20 @@ app.get('/profile', function (req, res) {
             }
             res.render('profile', user);
         });
-        // res.render('profile');
+        
     } else {
         res.redirect('/');
     }
     
 });
-
-app.get("/admin", function (req, res) {
-    if (req.isAuthenticated()) {
-        console.log(req.user);
-        res.render("admin");
-    } else {
-        res.redirect("/");
-    }
-});
+            app.get("/admin", function (req, res) {
+                if (req.isAuthenticated()) {
+                    console.log(req.user);
+                    res.render("admin");
+                } else {
+                    res.redirect("/");
+                }
+            });
 
 app.get("/signup", function (req, res) {
     if (req.isAuthenticated()) {
@@ -117,10 +101,62 @@ app.get("/signup", function (req, res) {
         res.render("signup");
     }
 });
+                app.get('/products', function (req, res) {
+                    
+                    products.find({}, function (err, productsDb) {
+                        console.log('err', err);
+                        console.log('productsDb', productsDb);
+                        if (err !== null) {
+                            console.log('Cannot get users err', err)
+                        } else {
+                            console.log('products fetched successfully');
+                        }
+                        console.log('productsDb',productsDb)
 
+                        res.render('products', {
+                            products:productsDb
+                        })
+                    })
+                })
+               
+app.post('/products',upload.single('image'),function(req,res){
+    var mimetypeMappro = {
+        'image/gif': 'gif',
+        'image/jpeg': 'jpg',
+        'image/png': 'png'
+    };
+    var extension = mimetypeMappro[req.file.mimetype]; // req.file.mimetype might be equal to image/png
+    var serverPicture = req.file.path + '.' + extension; // path in the server
+    var image = serverPicture.replace('public', ''); // path in the db to be used on the client side
+
+    fs.rename(req.file.path, serverPicture, function (err) {
+        if (err !== null) {
+            console.log('Cannot rename');
+            return;
+        }
+        console.log('image', image);
+        console.log("will signup");
+        var product = new products({
+            name:    req.body.name,
+            produitPix: req.body.produitPix,
+            ville:  req.body.ville,
+            discription: req.body.discription,
+            image:     image,
+        });
+        product.save(function (err, products) {
+            console.log('err', err);
+            console.log('document', products);
+            if (err !== null) {
+                console.log('connot save user err', err);
+            } else {
+                console.log('user saved successifly');
+                console.log('products', products)
+            }
+            res.render('products',products)
+        })
+    });    
+})
 app.post("/signup",upload.single('image'), function (req, res) {
-
-    
     var mimetypeMap = {
         'image/gif': 'gif',
         'image/jpeg': 'jpg',
@@ -135,28 +171,20 @@ app.post("/signup",upload.single('image'), function (req, res) {
             console.log('Cannot rename');
             return;
         }
-    
         console.log('image', image);
-
         console.log("will signup");
 
         var username = req.body.username;
         var name= req.body.name
         var firstName = req.body.firstName;
         var email = req.body.email;
-    
-        
         var password= req.body.password;
         var passwordConfirm= req.body.passwordConfirm;
-
         if( password == passwordConfirm ){
             req.body.password
         }else{
             res.send('your password it is incorret')
         }
-
-    
-
     User.register(
         new User({
             name:name,
@@ -197,11 +225,10 @@ app.post(
     })
 );
 
-
-app.get("/logout", function (req, res) {
-    req.logout();
-    res.redirect("/");
-});
+            app.get("/logout", function (req, res) {
+                req.logout();
+                res.redirect("/");
+            });
 
 app.listen(port, function() {
     console.log("Server started on port:", port);

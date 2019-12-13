@@ -1,0 +1,16 @@
+
+h1 {
+    font-family: 'Lilita One', cursive;
+}
+img {
+    width: 400px;
+    height: 300px;
+    border-radius: 15%;
+    border: 4px rgb(235, 231, 231) solid;
+}
+.cities {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 600px;
+}
